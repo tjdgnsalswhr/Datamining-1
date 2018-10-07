@@ -14,8 +14,8 @@ testdata_x = testdata.iloc[:,1:785].values
 testdata_y = testdata.iloc[:,0:1].values
 
 
-myknn = Myclassifier(3, traindata_x, traindata_y, testdata_x, testdata_y, len(traindata_y))
+myknn = Myclassifier(3, traindata_x, traindata_y,len(traindata_y))
 
 print(myknn.k)
 
-myknn.learning()
+myknn.learning(testdata_x, testdata_y)
