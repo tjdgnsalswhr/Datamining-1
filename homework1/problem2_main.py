@@ -19,3 +19,4 @@ myknn = Myclassifier(3, traindata_x, traindata_y,len(traindata_y))
 print(myknn.k)
 
 myknn.learning(testdata_x, testdata_y)
+myknn.predict()

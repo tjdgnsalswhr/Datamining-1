@@ -1,6 +1,6 @@
 import numpy
 import matplotlib
-
+import operator
 
 class Myclassifier():
 	
@@ -43,7 +43,7 @@ class Myclassifier():
 	def Getdistance(self):
 		self.GetEuclidian()
 		self.GetManhattan()
-	#	self.LLoop()
+		self.GetInfiniteL()
 
 	
 	def GetEuclidian(self):
@@ -70,9 +70,33 @@ class Myclassifier():
 
 		
 		print(self.resultmat)
-						
-				
+
+
+	def GetInfiniteL(self):
+		for i in range(0,len(self.testdata_y)):
+			for j in range(0,len(self.traindata_y)):
+				temp = self.traindata_x[j]-self.testdata_x[i]
+				temp2 = numpy.abs(temp)
+				tempresult = numpy.max(temp2)
+				self.resultmat[i][j][3] = tempresult
+		#print(len(self.testdata_y))
+		#temp10 = self.traindata_x[0]-self.testdata_x[198]
+		#temp11 = numpy.abs(temp10)
+		#print(numpy.max(temp11))		
+		print(self.resultmat)
+
+
+
 	def predict(self):
+		j = 0
+		temparr = self.resultmat[j,:,0:2]
+		print(temparr)
+		temparr2 = sorted(temparr, key=lambda x:x[1])
+		print(temparr2[0])
+		print(temparr2[1])
+		print(temparr2[0][0])
+		print(temparr2[1][1])
+		print(self.k)
 		
 
 	#def LLoop(self):
