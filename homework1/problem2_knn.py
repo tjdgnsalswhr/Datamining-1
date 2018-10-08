@@ -12,7 +12,7 @@ class Myclassifier():
 		#self_testdata_x = testdata_x
 		#self_testdata_y = testdata_y
 		self.vertical = vertical
-		self.resultmat = numpy.full((self.vertical,3),0)
+		#self.resultmat = numpy.full((len(self.testdata_y),self.vertical,3),0)
 	#Training..............
 
 	def learning(self, testdata_x,testdata_y):
@@ -29,29 +29,51 @@ class Myclassifier():
 		#print(self.traindata_x[1])
 		#arr = self.traindata_x[0] - self.traindata_x[1]
 		#print(arr)
-		self.resultmat[1][0] = 123
+
+		self.resultmat = numpy.full((len(self.testdata_y),self.vertical,4),0.0)
+		#self.resultmat[0][1][1] = 123
+		#print(self.resultmat)
+		for j in range(0,len(self.testdata_y)):
+			for i in range(0,self.vertical):
+				self.resultmat[j][i][0] = self.traindata_y[i]
 		print(self.resultmat)
-		for i in range(0,self.vertical):
-			self.resultmat[i][0] = self.traindata_y[i]
-		print(self.resultmat)
+	        	
 		self.Getdistance()
 
 	def Getdistance(self):
 		self.GetEuclidian()
-	#	self.GetManhattan()
+		self.GetManhattan()
 	#	self.LLoop()
 
 	
 	def GetEuclidian(self):
-		for j in range(0,len(self.testdata_y))
-			for i in range(0,self.vertical):
-				temparray = self.traindata_x[i] - self.testdata_x[j]
-				
-				
+		for i in range(0,len(self.testdata_y)):
+			for j in range(0,len(self.traindata_y)):
+				temp = self.traindata_x[j]-self.testdata_x[i]
+				temp2 = temp**2
+				tempsum = numpy.sum(temp2)
+				tempresult = numpy.sqrt(tempsum)
+				self.resultmat[i][j][1] = tempresult
+
+		print(self.resultmat)
+
+	def GetManhattan(self):
+		#temp10 = self.traindata_x[0] - self.testdata_x[1]
+		#temp11 = numpy.abs(temp10)
+		#print(numpy.sum(temp11))
+		for i in range(0,len(self.testdata_y)):
+                        for j in range(0,len(self.traindata_y)):
+                                temp = self.traindata_x[j]-self.testdata_x[i]
+                                temp2 = numpy.abs(temp)
+                                tempsum = numpy.sum(temp2)
+                                self.resultmat[i][j][2] = tempsum
+
 		
-
-	#def GetManhattan(self):
-
+		print(self.resultmat)
+						
+				
+	def predict(self):
+		
 
 	#def LLoop(self):
 
