@@ -5,20 +5,21 @@ import operator
 class Myclassifier():
 	
 
-	def __init__(self, k, traindata_x, traindata_y, vertical):
+	def __init__(self, k, traindata_x, traindata_y):
 		self.k = k
 		self.traindata_x = traindata_x
 		self.traindata_y = traindata_y
+		#print(self.traindata_y)
 		#self_testdata_x = testdata_x
 		#self_testdata_y = testdata_y
-		self.vertical = vertical
+		#self.vertical = vertical
 		#self.resultmat = numpy.full((len(self.testdata_y),self.vertical,3),0)
 	#Training..............
 
 	def learning(self, testdata_x,testdata_y):
 		self.testdata_x = testdata_x
 		self.testdata_y = testdata_y
-		print("This is in problem2-knn")
+		#print("This is in problem2-knn")
 		##print(traindata_x)
 		#print(traindata_y)
 		#print(testdata_x)
@@ -30,11 +31,11 @@ class Myclassifier():
 		#arr = self.traindata_x[0] - self.traindata_x[1]
 		#print(arr)
 
-		self.resultmat = numpy.full((len(self.testdata_y),self.vertical,4),0.0)
+		self.resultmat = numpy.full((len(self.testdata_y),len(self.traindata_y),5),0.0)
 		#self.resultmat[0][1][1] = 123
 		#print(self.resultmat)
 		for j in range(0,len(self.testdata_y)):
-			for i in range(0,self.vertical):
+			for i in range(0,len(self.traindata_y)):
 				self.resultmat[j][i][0] = self.traindata_y[i]
 		print(self.resultmat)
 	        	
@@ -88,17 +89,42 @@ class Myclassifier():
 
 
 	def predict(self):
-		j = 0
-		temparr = self.resultmat[j,:,0:2]
-		print(temparr)
-		temparr2 = sorted(temparr, key=lambda x:x[1])
-		print(temparr2[0])
-		print(temparr2[1])
-		print(temparr2[0][0])
-		print(temparr2[1][1])
-		print(self.k)
+		#j = 2
+		#temparr = self.resultmat[j,:,0:2]
+		#print(temparr)
+		#temparr2 = sorted(temparr, key=lambda x:x[1])
+		#print(temparr2[0])
+		#print(temparr2[1])
+		#print(temparr2[2])
+		#print(temparr2[3])
+		#print(temparr2[4])
+		#print(temparr2[5])
+		#print(temparr2[6])
+		pred_y = []
+		for i in range(0,len(self.testdata_y)):
+			temparr = self.resultmat[i,:,0:2]
+			temparr2 = sorted(temparr, key=lambda x:x[1])
+			
+			labeltable = numpy.full((10),0)
+			for j in range(0,self.k):
+				#labeltable = numpy.full((10),0)
+				index = int(temparr2[j][0])
+				#print(index)
+				labeltable[index] = labeltable[index]+1
+			#print(labeltable)
+			label = numpy.argmax(labeltable)
+			#print(label)
+			pred_y.append(label)
+			#print(pred_y)	
+					
+		finpred_y = numpy.array(pred_y)	
+		return finpred_y
+		
 		
 
-	#def LLoop(self):
-
-
+	def score(self, actualdata, predictdata):
+		print("This is in score function")
+		self.actualdata = actualdata
+		self.predictdata = predictdata
+		print(self.actualdata)
+		print(self.predictdata)

@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 with open("cancer_train.csv", 'r') as csvfile:
 	traindata = pandas.read_csv(csvfile,names=['label','Clump Thickness','Uniformity of Cell Size','Uniformity of Cell Shape','Marginal Adhesion','Single Epithelial Cell Size','Bare Nuclei','Bland Chromatin','Normal Nucleoli','Mitoses'])
 
-print(traindata)
+#print(traindata)
 
 with open("cancer_test.csv", 'r') as csvfile2:
 	testdata = pandas.read_csv(csvfile2,names=['label','Clump Thickness','Uniformity of Cell Size','Uniformity of Cell Shape','Marginal Adhesion','Single Epithelial Cell Size','Bare Nuclei','Bland Chromatin','Normal Nucleoli','Mitoses'])
@@ -23,7 +23,7 @@ with open("cancer_test.csv", 'r') as csvfile2:
 traindata_x = traindata.iloc[:,1:10].values
 traindata_y = traindata.label.values
 
-#print(traindata_x)
+print(traindata_x)
 #print(traindata_y)
 
 knn5 = KNeighborsClassifier(n_neighbors=3) 
@@ -36,7 +36,7 @@ testdata_y = testdata.label.values
 knnpredict_y = knn5.predict(testdata_x)
 
 print(accuracy_score(testdata_y,knnpredict_y))
-
+print(knn5.score(testdata_x,testdata_y))
 #----------------------------------------------------------------
 
 decstree = DecisionTreeClassifier()

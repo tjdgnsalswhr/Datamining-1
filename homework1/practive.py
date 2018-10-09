@@ -1,5 +1,12 @@
 import numpy
 
-group = [[1,2,3,4],[2,-1,-5,6],[1,5,8,10],[2,-40,3,5]]
-print(group)
-print(numpy.max(group))
+group = [1,2,3,4]
+group3 = numpy.array(group)
+print(group3)
+print(group3[3])
+
+
+
+
+group2 = numpy.full((10,10),0)
+print(group2)

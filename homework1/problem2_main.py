@@ -8,15 +8,27 @@ with open("digits_test.csv",'r') as csvfile2:
 	testdata = pandas.read_csv(csvfile2, header = None)
 
 traindata_x = traindata.iloc[:,1:785].values
-traindata_y = traindata.iloc[:,0:1].values
-
+traindata_y = (traindata.iloc[:,0:1].values).reshape(-1)
+#print(traindata_y)
 testdata_x = testdata.iloc[:,1:785].values
-testdata_y = testdata.iloc[:,0:1].values
+testdata_y = (testdata.iloc[:,0:1].values).reshape(-1)
 
 
-myknn = Myclassifier(3, traindata_x, traindata_y,len(traindata_y))
+myknn = Myclassifier(17, traindata_x, traindata_y)
 
-print(myknn.k)
+#print(myknn.k)
 
 myknn.learning(testdata_x, testdata_y)
-myknn.predict()
+predict_y = myknn.predict()
+
+#print(traindata_y)
+#print(predict_y)
+
+myknn.score(testdata_y,predict_y)
+
+
+
+
+
+
+#yknn.predict()
