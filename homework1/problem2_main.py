@@ -14,7 +14,7 @@ testdata_x = testdata.iloc[:,1:785].values
 testdata_y = (testdata.iloc[:,0:1].values).reshape(-1)
 
 
-myknn = Myclassifier(17, traindata_x, traindata_y)
+myknn = Myclassifier(10, traindata_x, traindata_y)
 
 #print(myknn.k)
 

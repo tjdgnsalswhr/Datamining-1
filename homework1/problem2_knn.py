@@ -133,5 +133,55 @@ class Myclassifier():
 			actualindex = (numpy.array(numpy.where(self.actualdata==i))).reshape(-1)
 			print(actualindex)
 			for j in actualindex:
-				print(j)
-				print(predictdata[j))
+				print(predictdata[j])
+				if predictdata[j]==i:
+					confusion[i][i] = confusion[i][i]+1
+				else:
+					confusion[i][predictdata[j]] = confusion[i][predictdata[j]]+1
+		
+		print(confusion)
+
+		#--------------calculate recall---------------------------
+		print("Calculate Recall")	
+		tempsum = 0.0
+		tempsum2 = 0.0
+		for i in range(0,10):
+			for j in range(0,10):
+				tempsum = tempsum + confusion[i][j]
+			print(tempsum)
+			temprecall = confusion[i][i]/tempsum
+			tempsum2 = tempsum2+temprecall
+			tempsum = 0.0
+		recall = tempsum2/10
+
+
+		#-------------calculate precision------------------------
+
+		print("Calculate Precision")
+		tempsum = 0.0
+		tempsum2 = 0.0
+		for i in range(0,10):
+			for j in range(0,10):
+				tempsum = tempsum + confusion[j][i]
+			print(tempsum)
+			tempprecs = confusion[i][i]/tempsum
+			tempsum2 = tempsum2+tempprecs
+			tempsum=0.0
+		precision = tempsum2/10
+
+		#------------calculate F-1 score-----------------------
+
+		print("Calculate F-1 score")
+		fmeasure = 2*(precision*recall)/(precision+recall)
+
+		#------------calculate Accuracy ----------------------
+		print("Calculate Accuracy")
+		tempsum = 0.0
+		tempsum2 = 0.0
+		for i in range(0,10):
+			tempsum = tempsum + confusion[i][i]
+		print(tempsum)
+		tempsum2 = numpy.sum(confusion)
+		accuracy = tempsum / tempsum2
+		print(accuracy)
+					
