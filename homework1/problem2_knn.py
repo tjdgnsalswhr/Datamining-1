@@ -124,7 +124,14 @@ class Myclassifier():
 
 	def score(self, actualdata, predictdata):
 		print("This is in score function")
+		confusion = numpy.full((10,10),0)
 		self.actualdata = actualdata
 		self.predictdata = predictdata
 		print(self.actualdata)
 		print(self.predictdata)
+		for i in range(0,10):
+			actualindex = (numpy.array(numpy.where(self.actualdata==i))).reshape(-1)
+			print(actualindex)
+			for j in actualindex:
+				print(j)
+				print(predictdata[j))
