@@ -66,7 +66,7 @@ for k in i:
 	tempknn = KNeighborsClassifier(n_neighbors=k)
 	#tempkfold = KFold(shuffle=True, random_state=0)
 	score = cross_val_score(tempknn, traindata_x, traindata_y, cv=10)
-	#print(score)
+	print(score)
 	avg = sum(score)/len(score)
 	print("%d of KNeighborsClassifier's  mean of score is %f"  %(k,avg))
 

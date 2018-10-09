@@ -2,43 +2,33 @@ import numpy
 import matplotlib
 import operator
 
-class Myclassifier():
+class Myclassifier(): #------------Class for KNN Classifier----------------------
 	
+
+	#-------------Constructer of Class. -----------------
 
 	def __init__(self, k, traindata_x, traindata_y):
 		self.k = k
 		self.traindata_x = traindata_x
 		self.traindata_y = traindata_y
-		#print(self.traindata_y)
-		#self_testdata_x = testdata_x
-		#self_testdata_y = testdata_y
-		#self.vertical = vertical
-		#self.resultmat = numpy.full((len(self.testdata_y),self.vertical,3),0)
-	#Training..............
+
+
+	#-------------This Function call other functions, distance function
 
 	def learning(self, testdata_x,testdata_y):
+
 		self.testdata_x = testdata_x
 		self.testdata_y = testdata_y
-		#print("This is in problem2-knn")
-		##print(traindata_x)
-		#print(traindata_y)
-		#print(testdata_x)
-		#print(testdata_y)	
-		#print(len(self.traindata_x))
-		#print(len(self.traindata_x[0]))
-		#print(self.traindata_x[0])
-		#print(self.traindata_x[1])
-		#arr = self.traindata_x[0] - self.traindata_x[1]
-		#print(arr)
+
+		#-------the resultmat matrix is filled with information related to distance
 
 		self.resultmat = numpy.full((len(self.testdata_y),len(self.traindata_y),5),0.0)
-		#self.resultmat[0][1][1] = 123
-		#print(self.resultmat)
 		for j in range(0,len(self.testdata_y)):
 			for i in range(0,len(self.traindata_y)):
 				self.resultmat[j][i][0] = self.traindata_y[i]
 		print(self.resultmat)
-	        	
+
+	        #-------call the distance function
 		self.Getdistance()
 
 	def Getdistance(self):
@@ -142,13 +132,13 @@ class Myclassifier():
 		print(confusion)
 
 		#--------------calculate recall---------------------------
-		print("Calculate Recall")	
+		#print("Calculate Recall")	
 		tempsum = 0.0
 		tempsum2 = 0.0
 		for i in range(0,10):
 			for j in range(0,10):
 				tempsum = tempsum + confusion[i][j]
-			print(tempsum)
+			#print(tempsum)
 			temprecall = confusion[i][i]/tempsum
 			tempsum2 = tempsum2+temprecall
 			tempsum = 0.0
@@ -157,13 +147,13 @@ class Myclassifier():
 
 		#-------------calculate precision------------------------
 
-		print("Calculate Precision")
+		#print("Calculate Precision")
 		tempsum = 0.0
 		tempsum2 = 0.0
 		for i in range(0,10):
 			for j in range(0,10):
 				tempsum = tempsum + confusion[j][i]
-			print(tempsum)
+			#print(tempsum)
 			tempprecs = confusion[i][i]/tempsum
 			tempsum2 = tempsum2+tempprecs
 			tempsum=0.0
@@ -171,17 +161,18 @@ class Myclassifier():
 
 		#------------calculate F-1 score-----------------------
 
-		print("Calculate F-1 score")
+		#print("Calculate F-1 score")
 		fmeasure = 2*(precision*recall)/(precision+recall)
 
 		#------------calculate Accuracy ----------------------
-		print("Calculate Accuracy")
+		#print("Calculate Accuracy")
 		tempsum = 0.0
 		tempsum2 = 0.0
 		for i in range(0,10):
 			tempsum = tempsum + confusion[i][i]
-		print(tempsum)
+		#print(tempsum)
 		tempsum2 = numpy.sum(confusion)
 		accuracy = tempsum / tempsum2
-		print(accuracy)
-					
+		#print(accuracy)
+			
+		return recall,precision,fmeasure,accuracy		

@@ -1,12 +1,8 @@
 import numpy
 
-group = [1,2,3,4]
-group3 = numpy.array(group)
+group = numpy.full((2,2),0)
+group2 = numpy.full((2,2),1)
+group3 = numpy.vstack((group,group2))
+group3 = numpy.vstack((group3,group2))
 print(group3)
-print(group3[3])
 
-
-
-
-group2 = numpy.full((10,10),0)
-print(group2)
