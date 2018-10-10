@@ -81,22 +81,19 @@ print("The Support Vector Machine's Test Accuracy is %f\n"%svmtestaccuracy)
 
 
 
-
+#problem 1-D-1
 print("\n\n--------** Use Cross Validation for finding hyper parameter K **-----------\n\n")
 
-
-i = range(1,30)
 scorelist = []
-for k in i:
+for k in range(3,21):
 	tempknn = KNeighborsClassifier(n_neighbors=k)
-	#tempkfold = KFold(shuffle=True, random_state=0)
-	score = cross_val_score(tempknn, traindata_x, traindata_y, cv=10)
-	print(score)
-	avg = sum(score)/len(score)
-	print("%d of KNeighborsClassifier's  mean of score is %f"  %(k,avg))
+	score = cross_val_score(tempknn, traindata_x, traindata_y, cv=5)
+	mean = sum(score)/len(score)
+	print("In 5Fold Cross Validation, the %dNN Classifier's mean of accuracy : %f"%(k,mean))
+	print("\n")
 
+print("\n\nIn above result, when K is 6, the mean of accurcy is maximum value\n\n")
 
-print("\n\n\n")
 knn17 = KNeighborsClassifier(n_neighbors=17)
 knn17.fit(traindata_x, traindata_y)
 knn17pred_y = knn17.predict(testdata_x)
@@ -105,28 +102,27 @@ confusion = confusion_matrix(testdata_y, knn17pred_y)
 
 print(knn17confu)
 print(confusion)
-"""
 
-print("--------------------SVM Cross Validation---------------------------------------\n\n\n\n")
+#problem 1-D-2
+
+print("\n\n-------** Use Cross Validation for finding hyper parameter Gamma **-----------\n\n")
 
 
-i = range(1,30)
-for j in i:
-        tempsvm = SVC(gamma=j)
-        #tempkfold = KFold(shuffle=True, random_state=0)
-        score = cross_val_score(tempsvm, traindata_x, traindata_y, cv=10)
-        #print(score)
-        avg = sum(score)/len(score)
-        print("%f of gamma of SVM's mean of score is %f"  %(j,avg))
-
+for j in range(1,30):
+	tempsvm = SVC(gamma=0.005, C=100.)
+	score = cross_val_score(tempsvm, traindata_x, traindata_y, cv=5)
+	mean = sum(score)/len(score)
+	print("In 5Fold Cross Validation, the SVM to have %f Gamma's mean of accuracy : %f"%(j,mean))
+	print("\n")
 
 print("\n\n\n")
+'''
 svm?? = SVC(gamma=??)
 svm??.fit(traindata_x, traindata_y)
 svm??pred_y = svm??.predict(testdata_x)
 svm??confu = metrics.classification_report(testdata_y,svm??pred_y)
+'''
 
 
-"""
 
 
