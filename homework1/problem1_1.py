@@ -8,7 +8,7 @@ from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-
+from sklearn.metrics import precision_recall_fscore_support
 
 
 with open("cancer_train.csv", 'r') as csvfile:
@@ -85,23 +85,27 @@ print("The Support Vector Machine's Test Accuracy is %f\n"%svmtestaccuracy)
 print("\n\n--------** Use Cross Validation for finding hyper parameter K **-----------\n\n")
 
 scorelist = []
-for k in range(3,21):
+for k in range(3,31):
 	tempknn = KNeighborsClassifier(n_neighbors=k)
 	score = cross_val_score(tempknn, traindata_x, traindata_y, cv=5)
 	mean = sum(score)/len(score)
 	print("In 5Fold Cross Validation, the %dNN Classifier's mean of accuracy : %f"%(k,mean))
-	print("\n")
 
 print("\n\nIn above result, when K is 6, the mean of accurcy is maximum value\n\n")
 
-knn17 = KNeighborsClassifier(n_neighbors=17)
-knn17.fit(traindata_x, traindata_y)
-knn17pred_y = knn17.predict(testdata_x)
-knn17confu = metrics.classification_report(testdata_y,knn17pred_y)
-confusion = confusion_matrix(testdata_y, knn17pred_y)
+#problem 1-E-1
 
-print(knn17confu)
+print("\n\n--------------------** 6-NN Classifier Analysis **--------------------\n\n")
+knn6 = KNeighborsClassifier(n_neighbors=6)
+knn6.fit(traindata_x, traindata_y)
+knn6pred_y = knn6.predict(testdata_x)
+analysis = metrics.classification_report(testdata_y,knn6pred_y)
+confusion = confusion_matrix(testdata_y, knn6pred_y)
+
+print("Confusion Matrix is : \n\n")
 print(confusion)
+print("\n\nAnalysis is : \n\n")
+print(analysis)
 
 #problem 1-D-2
 

@@ -2,42 +2,44 @@ import numpy
 import matplotlib
 import operator
 
-class Myclassifier(): #------------Class for KNN Classifier----------------------
+
+#problem[2]
+class Myclassifier(): 
 	
-
-	#-------------Constructer of Class. -----------------
-
+	#problem[2] 1-A
 	def __init__(self, k, traindata_x, traindata_y):
+		
+		print("-----------** New Classifier is constructed **---------------\n\n")
 		self.k = k
 		self.traindata_x = traindata_x
 		self.traindata_y = traindata_y
 
 
-	#-------------This Function call other functions, distance function
-
 	def learning(self, testdata_x,testdata_y):
 
+		print("\n\n-------------------** Training **------------------------\n\n")
 		self.testdata_x = testdata_x
 		self.testdata_y = testdata_y
-
-		#-------the resultmat matrix is filled with information related to distance
-
 		self.resultmat = numpy.full((len(self.testdata_y),len(self.traindata_y),5),0.0)
 		for j in range(0,len(self.testdata_y)):
 			for i in range(0,len(self.traindata_y)):
 				self.resultmat[j][i][0] = self.traindata_y[i]
+		print("\n\n This Matrix will have information of distance and label \n\n")
 		print(self.resultmat)
-
-	        #-------call the distance function
+		
 		self.Getdistance()
 
+	#problem[2] 1-B
 	def Getdistance(self):
+		
+		print("\n\n --------------** Calculating distance **----------------\n\n")
 		self.GetEuclidian()
 		self.GetManhattan()
 		self.GetInfiniteL()
-
+		print("\n\n ------------** All calculating distance are complete! **------\n\n")
 	
 	def GetEuclidian(self):
+		print("\n\n ------** Euclidian distance will be filled in matrix **-------\n\n")
 		for i in range(0,len(self.testdata_y)):
 			for j in range(0,len(self.traindata_y)):
 				temp = self.traindata_x[j]-self.testdata_x[i]
@@ -49,47 +51,34 @@ class Myclassifier(): #------------Class for KNN Classifier---------------------
 		print(self.resultmat)
 
 	def GetManhattan(self):
-		#temp10 = self.traindata_x[0] - self.testdata_x[1]
-		#temp11 = numpy.abs(temp10)
-		#print(numpy.sum(temp11))
+		print("\n\n -----** Manhattan distance will be filled in matrix **--------\n\n")
 		for i in range(0,len(self.testdata_y)):
                         for j in range(0,len(self.traindata_y)):
                                 temp = self.traindata_x[j]-self.testdata_x[i]
                                 temp2 = numpy.abs(temp)
                                 tempsum = numpy.sum(temp2)
                                 self.resultmat[i][j][2] = tempsum
-
 		
 		print(self.resultmat)
 
 
 	def GetInfiniteL(self):
+		print("\n\n -----** Infinite L distance will be filled in matrix **-------\n\n")
 		for i in range(0,len(self.testdata_y)):
 			for j in range(0,len(self.traindata_y)):
 				temp = self.traindata_x[j]-self.testdata_x[i]
 				temp2 = numpy.abs(temp)
 				tempresult = numpy.max(temp2)
 				self.resultmat[i][j][3] = tempresult
-		#print(len(self.testdata_y))
-		#temp10 = self.traindata_x[0]-self.testdata_x[198]
-		#temp11 = numpy.abs(temp10)
-		#print(numpy.max(temp11))		
+	
 		print(self.resultmat)
 
 
+	#problem[2] 1-C
 
 	def predict(self):
-		#j = 2
-		#temparr = self.resultmat[j,:,0:2]
-		#print(temparr)
-		#temparr2 = sorted(temparr, key=lambda x:x[1])
-		#print(temparr2[0])
-		#print(temparr2[1])
-		#print(temparr2[2])
-		#print(temparr2[3])
-		#print(temparr2[4])
-		#print(temparr2[5])
-		#print(temparr2[6])
+		
+		print("\n\n--------------** label will be predicted **----------------\n\n")
 		pred_y = []
 		for i in range(0,len(self.testdata_y)):
 			temparr = self.resultmat[i,:,0:2]
@@ -97,82 +86,80 @@ class Myclassifier(): #------------Class for KNN Classifier---------------------
 			
 			labeltable = numpy.full((10),0)
 			for j in range(0,self.k):
-				#labeltable = numpy.full((10),0)
 				index = int(temparr2[j][0])
-				#print(index)
 				labeltable[index] = labeltable[index]+1
-			#print(labeltable)
 			label = numpy.argmax(labeltable)
-			#print(label)
 			pred_y.append(label)
-			#print(pred_y)	
 					
-		finpred_y = numpy.array(pred_y)	
+		finpred_y = numpy.array(pred_y)
+
+		print("\n\n--------------** predict data is below **-----------------\n\n")
+		print(finpred_y)
 		return finpred_y
 		
-		
+
+	#problem[2] 2-B		
 
 	def score(self, actualdata, predictdata):
-		print("This is in score function")
+		print("\n\n ---------------** Score will be caculated **--------------\n\n")
 		confusion = numpy.full((10,10),0)
 		self.actualdata = actualdata
 		self.predictdata = predictdata
-		print(self.actualdata)
-		print(self.predictdata)
 		for i in range(0,10):
 			actualindex = (numpy.array(numpy.where(self.actualdata==i))).reshape(-1)
-			print(actualindex)
 			for j in actualindex:
-				print(predictdata[j])
 				if predictdata[j]==i:
 					confusion[i][i] = confusion[i][i]+1
 				else:
 					confusion[i][predictdata[j]] = confusion[i][predictdata[j]]+1
 		
+		
+		print("\n\n-------------** Confusion table is below **----------------\n\n")
 		print(confusion)
 
-		#--------------calculate recall---------------------------
-		#print("Calculate Recall")	
+
+		print("\n\n------------** Recall will be calculated **----------------\n\n")
 		tempsum = 0.0
 		tempsum2 = 0.0
 		for i in range(0,10):
 			for j in range(0,10):
 				tempsum = tempsum + confusion[i][j]
-			#print(tempsum)
 			temprecall = confusion[i][i]/tempsum
 			tempsum2 = tempsum2+temprecall
 			tempsum = 0.0
+
 		recall = tempsum2/10
+		
 
+		print("\n\n------------** Precision will be calculated **-------------\n\n")
 
-		#-------------calculate precision------------------------
-
-		#print("Calculate Precision")
 		tempsum = 0.0
 		tempsum2 = 0.0
 		for i in range(0,10):
 			for j in range(0,10):
 				tempsum = tempsum + confusion[j][i]
-			#print(tempsum)
 			tempprecs = confusion[i][i]/tempsum
 			tempsum2 = tempsum2+tempprecs
 			tempsum=0.0
 		precision = tempsum2/10
 
-		#------------calculate F-1 score-----------------------
+		print("\n\n-----------** F-Measure will be calculated **--------------\n\n")
 
-		#print("Calculate F-1 score")
 		fmeasure = 2*(precision*recall)/(precision+recall)
 
-		#------------calculate Accuracy ----------------------
-		#print("Calculate Accuracy")
+		print("\n\n------------** Accuracy will be calculated **--------------\n\n")
 		tempsum = 0.0
 		tempsum2 = 0.0
 		for i in range(0,10):
 			tempsum = tempsum + confusion[i][i]
-		#print(tempsum)
+	
 		tempsum2 = numpy.sum(confusion)
 		accuracy = tempsum / tempsum2
-		#print(accuracy)
-			
+
+		print("\n\n-----------** Score Result **--------------------\n\n")
+		print("Recall is : %f" %recall)
+		print("Precision is : %f"%precision)
+		print("F-measure is : %f"%fmeasure)
+		print("Accuracy is : %f"%accuracy)
+
 		return recall,precision,fmeasure,accuracy		
