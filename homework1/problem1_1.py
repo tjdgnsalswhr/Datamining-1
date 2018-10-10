@@ -91,7 +91,7 @@ for k in range(3,31):
 	mean = sum(score)/len(score)
 	print("In 5Fold Cross Validation, the %dNN Classifier's mean of accuracy : %f"%(k,mean))
 
-print("\n\nIn above result, when K is 6, the mean of accurcy is maximum value\n\n")
+print("\n\nIn above result, when K is 6, the mean of accuracy is maximum value\n\n")
 
 #problem 1-E-1
 
@@ -113,19 +113,29 @@ print("\n\n-------** Use Cross Validation for finding hyper parameter Gamma **--
 
 
 for j in range(1,30):
-	tempsvm = SVC(gamma=0.005, C=100.)
+	tempsvm = SVC(gamma=0.005+j/100, C=100.)
 	score = cross_val_score(tempsvm, traindata_x, traindata_y, cv=5)
 	mean = sum(score)/len(score)
-	print("In 5Fold Cross Validation, the SVM to have %f Gamma's mean of accuracy : %f"%(j,mean))
-	print("\n")
+	print("In 5Fold Cross Validation, the SVM to have %f Gamma's mean of accuracy : %f"%((0.005+j/100),mean))
 
-print("\n\n\n")
-'''
-svm?? = SVC(gamma=??)
-svm??.fit(traindata_x, traindata_y)
-svm??pred_y = svm??.predict(testdata_x)
-svm??confu = metrics.classification_report(testdata_y,svm??pred_y)
-'''
+print("\n\nIn above result, when gamma is 0.105, the mean of accuracy is maximum value\n\n")
+
+
+#problem 1-E-2
+
+print("\n\n--------------------** Gamma 0.105, SVM **--------------------------\n\n")
+
+newsvm = SVC(gamma=0.105,C=100.)
+newsvm.fit(traindata_x, traindata_y)
+newsvmpred_y = newsvm.predict(testdata_x)
+newanalysis = metrics.classification_report(testdata_y,newsvmpred_y)
+newconfusion = confusion_matrix(testdata_y,newsvmpred_y)
+
+
+print("Confusion Matrix is : \n\n")
+print(newconfusion)
+print("\n\nAnalysis is : \n\n")
+print(newanalysis)
 
 
 

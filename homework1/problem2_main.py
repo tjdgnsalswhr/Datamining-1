@@ -73,7 +73,7 @@ traindata_y = (traindata.iloc[:,0:1].values).reshape(-1)
 testdata_x = testdata.iloc[:,1:785].values
 testdata_y = (testdata.iloc[:,0:1].values).reshape(-1)
 
-myknn = Myclassifier(5, traindata_x, traindata_y)
+myknn = Myclassifier(10, traindata_x, traindata_y)
 
 myknn.learning(testdata_x, testdata_y)
 predict_y = myknn.predict()
@@ -82,7 +82,6 @@ recall,precision,fmeasure,accuracy = myknn.score(testdata_y,predict_y)
 
 
 result = fivefoldCV(traindata_x,traindata_y)
-
 
 
 
